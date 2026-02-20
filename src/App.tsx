@@ -240,11 +240,11 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans pb-12">
       {/* Global Header (The Decision Bar) */}
-      <header className="bg-white border-b border-slate-200 px-8 py-5 sticky top-0 z-30 shadow-sm">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-12 items-center gap-8">
+      <header className="bg-white border-b border-slate-200 px-4 md:px-8 py-4 sm:py-5 sticky top-0 z-30 shadow-sm">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:grid lg:grid-cols-12 items-center gap-4 lg:gap-8">
           {/* Left: Product Info */}
-          <div className="col-span-3">
-            <div className="flex items-center gap-3 mb-0.5">
+          <div className="lg:col-span-3 w-full text-center lg:text-left">
+            <div className="flex items-center justify-center lg:justify-start gap-3 mb-0.5">
               <h1 className="text-xl font-extrabold tracking-tight text-slate-900">{product.name}</h1>
               <StatusBadge status={product.status} />
             </div>
@@ -252,7 +252,7 @@ export default function App() {
           </div>
 
           {/* Center: Readiness Meter */}
-          <div className="col-span-6 flex flex-col items-center">
+          <div className="lg:col-span-6 flex flex-col items-center w-full">
             <div className="w-full max-w-md">
               <div className="flex justify-between items-end mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Readiness Meter</span>
@@ -282,7 +282,7 @@ export default function App() {
           </div>
 
           {/* Right: Publish Button */}
-          <div className="col-span-3 flex justify-end">
+          <div className="lg:col-span-3 flex justify-center lg:justify-end w-full mt-2 lg:mt-0">
             <button
               onClick={handleLaunch}
               disabled={!isMarketReady || product.status === 'Launched'}
@@ -301,10 +301,10 @@ export default function App() {
       </header>
 
       {/* Main Cockpit Layout */}
-      <main className="max-w-[1600px] mx-auto px-8 mt-10 grid grid-cols-12 gap-10">
+      <main className="max-w-[1600px] mx-auto px-4 md:px-8 mt-6 md:mt-10 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-10">
 
         {/* Left Column: The Design Track (Vertical Flow) */}
-        <aside className="col-span-3 flex flex-col gap-6">
+        <aside className="lg:col-span-3 flex flex-col gap-6">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
             <div className="flex items-center gap-2">
               <PenTool size={18} className="text-indigo-500" />
@@ -400,7 +400,7 @@ export default function App() {
         </aside>
 
         {/* Right Section: The Sample & Competitor Matrix */}
-        <section className="col-span-9 flex flex-col gap-6">
+        <section className="lg:col-span-9 flex flex-col gap-6">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
             <div className="flex items-center gap-2">
               <Beaker size={18} className="text-blue-500" />
@@ -471,8 +471,8 @@ export default function App() {
                   </div>
 
                   {/* Card Body: Mini-table */}
-                  <div className="p-0 flex-1 relative">
-                    <table className="w-full text-[11px] text-left">
+                  <div className="p-0 flex-1 relative overflow-x-auto">
+                    <table className="w-full min-w-[320px] text-[11px] text-left">
                       <thead className="bg-slate-50 text-[9px] uppercase text-slate-400 border-b border-slate-100 font-black tracking-widest">
                         <tr>
                           <th className="px-5 py-3">Metric</th>
@@ -552,10 +552,10 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, y: 40 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 40 }}
               className="fixed inset-10 z-[70] flex flex-col overflow-hidden"
             >
-              <div className="flex justify-between items-center mb-8 px-4">
+              <div className="flex justify-between items-center mb-6 md:mb-8 px-4">
                 <div className="flex flex-col">
-                  <h2 className="text-3xl font-black text-white tracking-tight">Competitor Benchmarking View</h2>
-                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-xs">Direct Visual & Data Comparison</p>
+                  <h2 className="text-xl md:text-3xl font-black text-white tracking-tight">Competitor Benchmarking View</h2>
+                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">Direct Visual & Data Comparison</p>
                 </div>
                 <button
                   onClick={() => setComparisonSample(null)}
@@ -565,45 +565,47 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="flex-1 flex gap-6 mt-8 overflow-hidden">
-                {/* Sample (Left Anchor) */}
-                <div className="w-[420px] shrink-0 bg-white rounded-3xl shadow-2xl p-8 flex flex-col border-4 border-indigo-500 relative z-10">
-                  <div className="absolute -top-4 -left-4 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
-                    Baseline Anchor
-                  </div>
-                  <div className="flex justify-between items-start mb-8 mt-2">
-                    <div>
-                      <h3 className="text-3xl font-black text-slate-900 tracking-tight">{comparisonSample.batchId}</h3>
-                      <p className="text-slate-400 font-bold text-xs mt-1">Submitted: {comparisonSample.date}</p>
+              <div className="flex-1 w-full mt-4 md:mt-8 overflow-hidden relative">
+                {/* Scrollable Container spanning both Anchor and Competitors */}
+                <div className="w-full h-full flex flex-row gap-4 md:gap-6 overflow-x-auto pb-6 px-4 md:px-0 md:pr-10 snap-x snap-mandatory lg:snap-none hide-scrollbar items-start">
+
+                  {/* Sample (Left Anchor) */}
+                  <div className="w-[85vw] sm:w-[60vw] md:w-[420px] shrink-0 snap-center md:snap-none bg-white rounded-3xl shadow-2xl p-6 md:p-8 flex flex-col border-2 md:border-4 border-indigo-500 relative z-30 md:sticky md:left-0 h-fit max-h-[75vh] md:max-h-none overflow-y-auto">
+                    <div className="absolute -top-3 md:-top-4 -left-3 md:-left-4 bg-indigo-600 text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg z-20">
+                      Baseline Anchor
                     </div>
-                    <StatusBadge status={comparisonSample.verdict} />
+                    <div className="flex justify-between items-start mb-8 mt-2">
+                      <div>
+                        <h3 className="text-3xl font-black text-slate-900 tracking-tight">{comparisonSample.batchId}</h3>
+                        <p className="text-slate-400 font-bold text-xs mt-1">Submitted: {comparisonSample.date}</p>
+                      </div>
+                      <StatusBadge status={comparisonSample.verdict} />
+                    </div>
+
+                    <div className="flex-1 flex flex-col gap-6">
+                      {product.metricDefinitions.map(def => {
+                        const sVal = comparisonSample.metrics[def.id] || 0;
+                        return (
+                          <div key={def.id} className="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <div className="flex flex-col">
+                              <span className="text-xs font-black text-slate-900 uppercase tracking-wider">{def.name}</span>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase">{def.unit}</span>
+                            </div>
+                            <div className="text-3xl font-mono font-black text-indigo-600 tabular-nums">
+                              {sVal}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
 
-                  <div className="flex-1 flex flex-col gap-6">
-                    {product.metricDefinitions.map(def => {
-                      const sVal = comparisonSample.metrics[def.id] || 0;
-                      return (
-                        <div key={def.id} className="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                          <div className="flex flex-col">
-                            <span className="text-xs font-black text-slate-900 uppercase tracking-wider">{def.name}</span>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase">{def.unit}</span>
-                          </div>
-                          <div className="text-3xl font-mono font-black text-indigo-600 tabular-nums">
-                            {sVal}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
+                  {/* Fade mask for scroll hint (Desktop only) */}
+                  <div className="hidden md:block fixed right-10 top-32 bottom-10 w-32 bg-gradient-to-l from-slate-900/90 to-transparent pointer-events-none z-20" />
 
-                {/* Competitors (Right Challengers Track) */}
-                <div className="flex-1 flex gap-6 overflow-x-auto pb-4 pr-10 snap-x snap-mandatory hide-scrollbar relative">
-                  {/* Fade mask for scroll hint */}
-                  <div className="fixed right-10 top-32 bottom-10 w-32 bg-gradient-to-l from-slate-900/90 to-transparent pointer-events-none z-20" />
-
+                  {/* Competitors (Right Challengers Track) */}
                   {product.competitors.map((comp, idx) => (
-                    <div key={comp.id} className="w-[340px] shrink-0 snap-start bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-3xl p-8 flex flex-col hover:bg-slate-800 transition-colors">
+                    <div key={comp.id} className="w-[85vw] sm:w-[60vw] md:w-[340px] shrink-0 snap-center md:snap-start bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-3xl p-6 md:p-8 flex flex-col hover:bg-slate-800 transition-colors h-fit max-h-[75vh] md:max-h-none overflow-y-auto z-10">
                       <div className="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-4">
                         Challenger #{idx + 1}
                       </div>
@@ -642,6 +644,9 @@ export default function App() {
                       </div>
                     </div>
                   ))}
+
+                  {/* Space at the end for scrolling on mobile */}
+                  <div className="shrink-0 w-4 md:w-0" />
                 </div>
               </div>
             </motion.div>
@@ -660,17 +665,17 @@ export default function App() {
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-full max-w-lg bg-white rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden"
             >
-              <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <div className="p-6 md:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h2 className="text-xl font-black text-slate-900 tracking-tight">Advance Status</h2>
                 <button onClick={() => setAdvancingItem(null)} className="p-2 text-slate-400 hover:bg-slate-200 rounded-full transition-colors">
                   <XCircle size={24} />
                 </button>
               </div>
 
-              <div className="p-8 bg-white">
-                <p className="text-slate-600 mb-8 flex items-center gap-3 text-sm font-medium">
+              <div className="p-6 md:p-8 bg-white">
+                <p className="text-slate-600 mb-8 flex flex-col sm:flex-row sm:items-center gap-3 text-sm font-medium">
                   Advancing <strong className="text-slate-900">{advancingItem.title}</strong> to <StatusBadge status={advancingItem.nextStatus} />
                 </p>
 
@@ -683,11 +688,11 @@ export default function App() {
                 />
               </div>
 
-              <div className="p-8 border-t border-slate-100 bg-slate-50 flex justify-end gap-4">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                 <button onClick={() => setAdvancingItem(null)} className="px-6 py-3 border border-slate-200 bg-white text-slate-700 rounded-xl font-bold text-xs hover:bg-slate-50 transition-all">
                   CANCEL
                 </button>
-                <button onClick={submitAdvance} className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-900/20 flex items-center gap-2">
+                <button onClick={submitAdvance} className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-900/20 flex items-center justify-center gap-2">
                   CONFIRM & ADVANCE <ArrowRight size={16} />
                 </button>
               </div>
@@ -707,16 +712,16 @@ export default function App() {
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-full max-w-lg bg-white rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden"
             >
-              <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <div className="p-6 md:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h2 className="text-xl font-black text-slate-900 tracking-tight">Edit Design Image</h2>
                 <button onClick={() => setEditingImage(null)} className="p-2 text-slate-400 hover:bg-slate-200 rounded-full transition-colors">
                   <XCircle size={24} />
                 </button>
               </div>
 
-              <div className="p-8 bg-white">
+              <div className="p-6 md:p-8 bg-white">
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Artwork Image URL</label>
                 <input
                   value={editingImage.url}
@@ -733,7 +738,7 @@ export default function App() {
                 )}
               </div>
 
-              <div className="p-8 border-t border-slate-100 bg-slate-50 flex justify-end gap-4">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                 <button onClick={() => setEditingImage(null)} className="px-6 py-3 border border-slate-200 bg-white text-slate-700 rounded-xl font-bold text-xs hover:bg-slate-50 transition-all">
                   CANCEL
                 </button>
@@ -757,9 +762,9 @@ export default function App() {
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-white rounded-3xl shadow-2xl z-50 flex flex-col max-h-[90vh] overflow-hidden"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] md:w-full max-w-4xl bg-white rounded-3xl shadow-2xl z-50 flex flex-col max-h-[90vh] overflow-hidden"
             >
-              <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <div className="p-6 md:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div>
                   <h2 className="text-xl font-black text-slate-900 tracking-tight">Manage Competitor Products</h2>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Set benchmark values for comparison</p>
@@ -769,8 +774,8 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="p-8 overflow-y-auto flex-1 flex flex-col gap-8 bg-white">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 md:p-8 overflow-y-auto flex-1 flex flex-col gap-8 bg-white">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {product.competitors.map(comp => (
                     <div key={comp.id} className="p-6 border border-slate-200 rounded-2xl bg-slate-50/50 flex flex-col gap-4">
                       <div className="flex justify-between items-start">
@@ -818,8 +823,8 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-8 border-t border-slate-100 bg-slate-50 flex justify-end">
-                <button onClick={() => setIsCompetitorsModalOpen(false)} className="px-10 py-3.5 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-900/20">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex justify-end">
+                <button onClick={() => setIsCompetitorsModalOpen(false)} className="w-full sm:w-auto px-10 py-3.5 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-900/20">
                   DONE
                 </button>
               </div>
@@ -839,9 +844,9 @@ export default function App() {
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-3xl shadow-2xl z-50 flex flex-col max-h-[90vh] overflow-hidden"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] md:w-full max-w-2xl bg-white rounded-3xl shadow-2xl z-50 flex flex-col max-h-[90vh] overflow-hidden"
             >
-              <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <div className="p-6 md:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div>
                   <h2 className="text-xl font-black text-slate-900 tracking-tight">Configure Product Metrics</h2>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Define laboratory benchmarks for {product.name}</p>
@@ -851,7 +856,7 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="p-8 overflow-y-auto flex-1 flex flex-col gap-4 bg-white">
+              <div className="p-6 md:p-8 overflow-y-auto flex-1 flex flex-col gap-4 bg-white">
                 {product.metricDefinitions.map(def => (
                   <div key={def.id} className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 border border-slate-200 rounded-2xl bg-slate-50/50">
                     <div className="flex-1">
@@ -907,8 +912,8 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="p-8 border-t border-slate-100 bg-slate-50 flex justify-end">
-                <button onClick={() => setIsMetricsModalOpen(false)} className="px-10 py-3.5 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-900/20">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex justify-end">
+                <button onClick={() => setIsMetricsModalOpen(false)} className="w-full sm:w-auto px-10 py-3.5 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-900/20">
                   SAVE CONFIGURATION
                 </button>
               </div>
@@ -929,9 +934,9 @@ export default function App() {
             <motion.div
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-full max-w-xl bg-white shadow-2xl z-[90] flex flex-col border-l border-slate-200"
+              className="fixed top-0 right-0 bottom-0 w-[90vw] md:w-full max-w-xl bg-white shadow-2xl z-[90] flex flex-col border-l border-slate-200"
             >
-              <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <div className="p-6 md:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div>
                   <h2 className="text-2xl font-black text-slate-900 tracking-tight">R&D Feedback Report</h2>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Batch ID: {rejectingSample.batchId}</p>
@@ -941,7 +946,7 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="p-8 flex-1 overflow-y-auto flex flex-col gap-8">
+              <div className="p-6 md:p-8 flex-1 overflow-y-auto flex flex-col gap-8">
                 <div>
                   <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Benchmark Failure Analysis</h3>
                   <div className="flex flex-col gap-3">
@@ -983,7 +988,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-8 border-t border-slate-100 bg-slate-50 flex gap-4">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-4">
                 <button onClick={() => setRejectingSample(null)} className="flex-1 px-6 py-4 border border-slate-200 bg-white text-slate-700 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">
                   CANCEL
                 </button>
